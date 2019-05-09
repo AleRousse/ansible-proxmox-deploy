@@ -1,0 +1,7 @@
+---
+
+dist_netboot:
+  debian-stretch:
+    url: http://ftp.debian.org/debian/dists/stretch/main/installer-amd64/current/images/netboot/netboot.tar.gz
+  ubuntu-bionic:
+    url: http://archive.ubuntu.com/ubuntu/dists/bionic-updates/main/installer-amd64/current/images/netboot/netboot.tar.gz

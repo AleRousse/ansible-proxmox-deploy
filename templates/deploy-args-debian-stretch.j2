@@ -1,0 +1,7 @@
+{% include 'kernel.j2' %}
+ -append "preseed/file=/preseed.cfg
+ debian/priority=critical
+ debian-installer/allow_unauthenticated_ssl=true
+ vga=normal
+ locale={{ item.value.locale }}.UTF-8
+ FRONTEND_BACKGROUND=original"
