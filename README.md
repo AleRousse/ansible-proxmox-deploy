@@ -1,5 +1,6 @@
-Creates virtual machines and lxc container with Proxmox and installs (unattended) a distribution on it. This role is based on Inoxio proxmox_vms (https://github.com/inoxio/ansible-role-proxmox-vms)
+Creates virtual machines and lxc container with Proxmox and installs (unattended) a distribution on it.
 =========
+This role is based on Inoxio proxmox_vms (https://github.com/inoxio/ansible-role-proxmox-vms)
      
 Example playbook
 ----------------
