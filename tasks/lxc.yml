@@ -1,0 +1,45 @@
+---
+- name: Get all hosts that need to be deploy on  PROXMOX
+  set_fact: 
+    hosts : "{{ hosts|default([]) | combine( {item: hostvars[item]} ) }}"
+  with_items: "{{ groups['all'] }}"
+  when: 
+    - hostvars[item].hypervisor is defined
+    - hostvars[item].node is defined
+    - hostvars[item].type is defined
+    - hostvars[item].type == lxc
+    - hostvars[item].hypervisor == "pve" 
+
+- name: Templates > update PVE template list
+  command: pveam update
+  
+- name: Templates > find available
+  shell: pveam available | awk '{print $2}'
+  changed_when: false
+  register: __proxmoxy_templates_all_list
+
+- name: Templates > filter available list
+  set_fact:
+    __proxmoxy_templates_list: "{{ __proxmoxy_templates_list|default([]) + __proxmoxy_templates_all_list.stdout_lines|select('search', item)|sort }}"
+  # changed_when: false
+  with_items: "{{ proxmoxy__templates }}"
+
+- name: Templates > download matching templates
+  shell: >
+    pveam download {{ proxmoxy__templates_storage|default('local') }} {{ item }}
+    creates={{ proxmoxy__templates_dir }}/{{ item }}
+  with_items: "{{ __proxmoxy_templates_list | default([]) }}"
+
+- name: Create lxc containers
+  proxmox:
+    node: "{{ item.value.node }}"
+    api_user: "{{ proxmox.api_user }}"
+    api_password: "{{ proxmox.api_password }}"
+    api_host: "{{ proxmox.api_host }}"
+    password: "{{ item.value.user_password }}"
+    hostname: "{{ item.key }}"
+    ostemplate: 'local:vztmpl/ubuntu-14.04-x86_64.tar.gz'
+  with_dict: "{{ hosts }}"
+  loop_control:
+    pause: 10
+  notify: sleep
