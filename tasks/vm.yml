@@ -205,7 +205,7 @@
   with_items: "{{ created_vms_pve.results }}"
   register: current_vm_state
   until: current_vm_state.status == "stopped"
-  retries: 100
+  retries: 120
   delay: 10
   when: item is changed
 
