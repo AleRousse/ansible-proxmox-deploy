@@ -2,10 +2,12 @@
 - name: Get all hosts that need to be deploy on  PROXMOX
   set_fact: 
     hosts : "{{ hosts|default([]) | combine( {item: hostvars[item]} ) }}"
-  with_items: "{{ groups['all'] }}"
+  with_items: "{{ groups[vmsgroup | default('all') ] }}"
   when: 
     - hostvars[item].hypervisor is defined
     - hostvars[item].node is defined
+    - hostvars[item].type is defined
+    - hostvars[item].type == "vm"
     - hostvars[item].hypervisor == "pve" 
 
 - name: Check if deploy-args file exists
@@ -51,6 +53,7 @@
     api_host: "{{ proxmox.api_host }}"
     node: "{{ item.value.node }}"
     name: "{{ item.key }}"
+    vmid: "{{ item.value.vmid |  default(omit) }}"
     net: "{{ item.value.net | default(proxmox_vms_defaults.net) }}"
     scsihw: "{{ item.value.scsihw | default(proxmox_vms_defaults.scsihw) }}"
     virtio: "{{ item.value.virtio | default(proxmox_vms_defaults.virtio) }}"

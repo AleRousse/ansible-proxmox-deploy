@@ -1,6 +1,3 @@
 ---
-# Create lxc container
-- include: lxc.yml
-
 # Create VM 
 - include: vm.yml

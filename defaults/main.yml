@@ -51,6 +51,7 @@ proxmox_vms_defaults:
   # Specifies whether a VM will be started during system bootup.
   onboot: 'yes'
   
+  timezone: 'America/New York'
   # Specifies the name of the file which contains the deploy arguments for the vm. The arguments in it are attached
   # to the args variable of a vm (see 'create vms' in tasks/main.yml) and are used when installing an os on a vm.
   deploy_args_template: 'deploy-args-debian-stretch-template.j2'
@@ -58,6 +59,13 @@ proxmox_vms_defaults:
   # Specifies the name of the template preseed file, which will be taken if the definition of the vm in the playbook
   # has no preseed path.
   preseed_template: 'debian-stretch.seed.j2'
+
+  mirror: 'debian.mirror.rafal.ca'
+
+  ntp_pools:
+    - 0.us.pool.ntp.org
+    - 1.us.pool.ntp.org
+    - 2.us.pool.ntp.org
 
   # Specifies the ubuntu distribution which will be installed on the vm.
   distribution: 'debian-stretch'

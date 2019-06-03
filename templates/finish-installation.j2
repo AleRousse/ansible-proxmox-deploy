@@ -17,9 +17,7 @@ update-grub
 ## Packages
 ################################################################################
 
-apt install --assume-yes openssh-client openssh-server {% if item.item.value.additional_packages is defined %}\
- {{ item.item.value.additional_packages | join(' ')  }}
-{% endif %}
+apt install --assume-yes openssh-client openssh-server
 
 ################################################################################
 ## Paste Scripts from files/scripts

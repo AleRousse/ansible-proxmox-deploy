@@ -11,8 +11,8 @@ d-i keyboard-configuration/xkb-keymap select {{ item.item.value.locale[:2] }}
 ### Network
 d-i netcfg/get_hostname                             string      {{ item.item.key }}
 {% if item.item.value.network is defined %}
-{% if item.item.value.network.domainname is defined %}
- d-i netcfg/get_domain string {{ item.item.value.network.domainname }}
+{% if item.item.value.domainname is defined %}
+ d-i netcfg/get_domain string {{ item.item.value.domainname }}
 {% endif %}
 {% if ( item.item.value.network.ip is defined and item.item.value.network.netmask is defined ) %}
  d-i netcfg/confirm_static                          boolean     true
@@ -23,17 +23,21 @@ d-i netcfg/get_hostname                             string      {{ item.item.key
 {% if item.item.value.network.gateway is defined %}
  d-i netcfg/get_gateway                             string      {{ item.item.value.network.gateway }}
 {% endif %}
-{% if item.item.value.network.nameserver is defined %}
- d-i netcfg/get_nameservers                         string      {{ item.item.value.network.nameserver }}
+{% if item.item.value.nameserver is defined %}
+ d-i netcfg/get_nameservers                         string      {{ item.item.value.nameserver }}
 {% endif %}
 {% else %}
  d-i netcfg/get_domain                              string      localdomain
 {% endif %}
 
 ### Mirror
-d-i mirror/http/hostname                            string      {{ item.item.value.mirror }}
+d-i mirror/country                                  string      manual
+d-i mirror/http/hostname                            string      {{ item.item.value.mirror}}
 d-i mirror/http/directory                           string      /ubuntu
-d-i mirror/http/proxy                               string      
+d-i mirror/http/proxy                               string
+d-i mirror/codename                                 string      bionic
+d-i mirror/suite                                    string      bionic
+d-i mirror/udeb/suite                               string      bionic
 
 ### Account
 d-i passwd/root-login                               boolean     false
