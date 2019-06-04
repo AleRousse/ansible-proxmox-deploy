@@ -126,6 +126,11 @@ Or specify a inventory group to be deploy **by default all hosts will be deploye
 ```
 ansible-playbook playbooks/proxmox.yml -i inventories/production --ask-pass --ask-vault -K --extra-vars "vmsgroup=webserver"
 ```
+
+Testing
+--------------
+Automatic testing this role is difficult because you need a VM with Proxmox on it which creates the VMs within the VM itself. Thus a hypervisor is needed which supports nested virtualization.
+
 License
 -------
 Apache 2.0
