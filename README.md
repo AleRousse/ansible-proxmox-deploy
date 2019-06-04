@@ -85,7 +85,7 @@ node the VM will be installed.
       * `gateway`:(Required/No Defaults)  Specifies the gateway ip to be used by the VM.
   * `nameserver`: (Required/No Defaults) Specifies the nameserver ips to be used bthe VM.
   * `domainname`:(Required/No Defaults)  Specifies the domain name of the VM. 
-  * `ntp_pools`: (Defaults: US ntp servers: us.pool.ntp.org) Specifies the pool of ntp servers to use as a list.
+  * `ntp_pools`: (Defaults: US ntp servers: 0.us.pool.ntp.org) Specifies the pool of ntp servers to use as a list. Because of preseed limitation only one ntp can be use. The first one in the list will be use.
   * `scripts`: (Optional/No Default) Scripts is a list of filewhoconten
 will be inserted into the finish-installation file.
               E.g. copying ssh keys from AW

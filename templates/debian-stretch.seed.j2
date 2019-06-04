@@ -48,6 +48,10 @@ d-i passwd/user-password-again                      password    {{ item.item.val
 ### Clock 
 d-i clock-setup/utc                                 boolean     true
 d-i time/zone                                       string      {{ item.item.value.timezone }}
+{% if (item.item.value.ntp_pools is defined) and item.item.value.ntp_pools %}
+d-i clock-setup/ntp boolean                         true
+d-i clock-setup/ntp-server                          string      {{ item.item.value.ntp_pools[0] }}
+{% endif %}
 
 ### Partitioning
 d-i partman-auto/method                             string      lvm
