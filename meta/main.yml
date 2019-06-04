@@ -1,7 +1,10 @@
+---
 galaxy_info:
   role_name: proxmox_deploy
   author: Alexandre Rousseau, Michael Kunze, Martin Lesser, Karl-Erik Kley
-  description: Creates virtual machines and lxc container with Proxmox and installs (unattended) a distribution on it. This role is based on Inoxio proxmox_vms (https://github.com/inoxio/ansible-role-proxmox-vms)
+  description:
+    Creates virtual machines and lxc container with Proxmox and installs (unattended) a distribution on it.
+    This role is based on Inoxio proxmox_vms (https://github.com/inoxio/ansible-role-proxmox-vms)
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
@@ -10,7 +13,6 @@ galaxy_info:
   license: Apache 2.0
 
   min_ansible_version: 2.6.4
-
 
   platforms:
     - name: Debian
@@ -32,7 +34,7 @@ galaxy_info:
     - automatic
     - pxe
 
-dependencies: 
+dependencies:
   - role: geerlingguy.pip
     pip_package: python3-pip
     pip_install_packages:
