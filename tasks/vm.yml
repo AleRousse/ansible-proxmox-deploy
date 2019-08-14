@@ -46,6 +46,7 @@
   with_items: "{{ query('dict',  hosts  ) }}"
 
 - name: Create virtual machines
+  ignore_errors: yes
   proxmox_kvm:
     api_user: "{{ proxmox.api_user }}"
     api_password: "{{ proxmox.api_password }}"
@@ -73,7 +74,9 @@
   loop_control:
     pause: 10
   notify: sleep
+  failed_when: false
   register: created_vms_pve
+
 
 - meta: flush_handlers
 
