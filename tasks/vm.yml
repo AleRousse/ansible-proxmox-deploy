@@ -46,6 +46,7 @@
   with_items: "{{ query('dict',  hosts  ) }}"
 
 - name: Create virtual machines
+  ignore_errors: yes
   proxmox_kvm:
     api_user: "{{ proxmox.api_user }}"
     api_password: "{{ proxmox.api_password }}"
@@ -73,9 +74,9 @@
   loop_control:
     pause: 10
   notify: sleep
+  changed_when: true
+  failed_when: false
   register: created_vms_pve
-
-- meta: flush_handlers
 
 - name: Create temporary directory for netboot image
   file:
@@ -171,6 +172,7 @@
   when: item is changed
 
 - name: Start os setup
+  run_once: true
   proxmox_kvm:
     api_user: "{{ proxmox.api_user }}"
     api_password: "{{ proxmox.api_password }}"
@@ -185,6 +187,7 @@
 - meta: flush_handlers
 
 - name: Run os setup only once
+  run_once: true
   proxmox_kvm:
     api_user: "{{ proxmox.api_user }}"
     api_password: "{{ proxmox.api_password }}"
@@ -196,6 +199,7 @@
   when: item is changed
 
 - name: Wait for virtual machines to finish installation
+  run_once: true
   proxmox_kvm:
     api_user: "{{ proxmox.api_user }}"
     api_password: "{{ proxmox.api_password }}"
@@ -211,6 +215,7 @@
   when: item is changed
 
 - name: Restart vms
+  run_once: true
   proxmox_kvm:
     api_user: "{{ proxmox.api_user }}"
     api_password: "{{ proxmox.api_password }}"
@@ -222,6 +227,7 @@
   when: item is changed
 
 - name: Wait for virtual machines to finish rebooting
+  run_once: true
   wait_for:
     port: 22
     host: "{{ item.item.value.network.ip }}"
