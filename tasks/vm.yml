@@ -46,7 +46,7 @@
   with_items: "{{ query('dict',  hosts  ) }}"
 
 - name: Create virtual machines
-  ignore_errors: yes
+  run_once: true
   proxmox_kvm:
     api_user: "{{ proxmox.api_user }}"
     api_password: "{{ proxmox.api_password }}"
@@ -74,8 +74,6 @@
   loop_control:
     pause: 10
   notify: sleep
-  changed_when: true
-  failed_when: false
   register: created_vms_pve
 
 - name: Create temporary directory for netboot image
